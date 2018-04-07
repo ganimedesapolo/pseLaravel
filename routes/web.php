@@ -2,15 +2,8 @@
 
 
 
-Route::get('/', 'SoapController@conexion');
-Route::resource('crearTransaccion', 'SoapController');
-
-
-
-
-
-
-
+Route::get('/', 'SoapController@obtenerListaBancos');
+Route::post('crearTransaccion', 'SoapController@crearTransaccion')->name('crearTransaccion.guardar');
 
 
 

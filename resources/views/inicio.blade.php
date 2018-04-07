@@ -49,7 +49,7 @@
                                SELECCIONAR BANCO
                             </div>
                             <div class="panel-body">
-                            {!! Form::open(['route' => 'crearTransaccion.store']) !!}
+                            {!! Form::open(['route' => 'crearTransaccion.guardar']) !!}
                              <div class="form-group"> 
                                  <label for="selectBanco">Lista de Bancos</label>
                                   <select  id="idBanco" name="idBanco" class="form-control" id="sel1">
@@ -88,7 +88,7 @@
                              </div>  
 
                              <div class="form-group">
-                                {{ Form::label('firstName', 'Primer Nombre') }}
+                                {{ Form::label('firstName', 'Nombres') }}
                                 {{ Form::text('firstName', null, ['class' => 'form-control', 'id' => 'firstName']) }}
                              </div>  
                               <div class="form-group">
