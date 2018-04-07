@@ -1,0 +1,5 @@
+Tener instala composer en el pc
+1)Ejecutar composer install
+2)Ejecutar composer update
+3)Ejecutar php artisan key:generate 
+4) Habilitar soap client en el archi *php.ini
