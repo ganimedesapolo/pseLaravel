@@ -43,7 +43,7 @@ public function conexion(){
 
 
   public function store(Request $request ){
-      
+      fdfasfsfsf
       dd($request->all());
 
     }
