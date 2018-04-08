@@ -92,7 +92,83 @@ public function obtenerListaBancos(){
  */
 
  public function crearTransaccion(Request $request ){
-      return $this->obtenerListaBancos();
+   
+
+
+   $bankCode=$request->get('idBanco');
+   $bankInterface = '0';
+   $returnUrl = 'https://www.banco.colpatria.com.co/banca-virtual/';
+   $reference = 'sdertertrt465etgt4tttr';
+   $description = $request->get('descripcionPago');
+   $language = 'es';
+   $currency = 'COP';
+
+   $totalAmount = $request->get('totalCantidad');
+   $taxAmount = $request->get('impuesto');
+   $devolutionBase = $request->get('devolucionBase');
+   $tipAmount = $request->get('propina');
+
+   $person = array(
+                     'document' => $request->get('documentoPersona'),
+                     'documentType' =>$request->get('tipoDocumento'),
+                     'firstName' =>$request->get('firstName'),
+                     'lastName' =>$request->get('lastName'),
+                     'company' =>$request->get('company'),
+                     'emailAddress' =>$request->get('emailAddress'),
+                     'address' =>$request->get('address'),
+                     'city' =>$request->get('city'),
+                     'province' =>$request->get('province'),
+                     'country' =>$request->get('country'),
+                     'phone' =>$request->get('phone'),
+                     'mobile' =>$request->get('mobile'),
+                            );
+       
+
+   $ipAddress =  $request->ip();
+   $userAgent = $request->header('User-Agent');
+
+  
+
+  $PSETransactionRequest = array(
+         'bankCode' => $bankCode,
+         'bankInterface' =>  $bankInterface,
+         'returnURL' => $returnUrl,
+         'reference' =>  $reference,
+         'description' => $description,
+         'language' => $language,
+         'currency' => $currency,
+         'totalAmount' => floatval($totalAmount),
+         'taxAmount'=> floatval($taxAmount),
+         'devolutionBase' => floatval($devolutionBase),
+         'tipAmount' => floatval($tipAmount),
+         'payer' => $person,
+         'buyer' => $person,
+         'shipping' => $person,
+         'ipAddress' => $ipAddress,
+         'userAgent' => $userAgent
+
+  );
+
+
+     $auth = $this->obtenerArrayAutenticacion();
+     $auntetificacion = $auth['auth'];
+     $params = array( 'auth' => $auntetificacion   ,'transaction' =>   $PSETransactionRequest);
+   //  dd($params);
+     $client = $this->obtenerClienteSOAP();
+     
+ 
+      try{
+              $result = $client->createTransaction($params);
+         }
+          catch(SoapFault $fault) {
+              echo '<br>'.$fault;
+          }
+
+  dd($result);
+   
+
+
+
   }
 
 

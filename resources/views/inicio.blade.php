@@ -80,7 +80,7 @@
                              </div>  
                               <div class="form-group">
                                 {{ Form::label('documentoPersona', 'Documento Persona') }}
-                                {{ Form::text('documentoPersona', null, ['class' => 'form-control', 'id' => 'documentoPersona']) }}
+                                {{ Form::number('documentoPersona', null, ['class' => 'form-control', 'id' => 'documentoPersona']) }}
                              </div>  
                              <div class="form-group">
                                 {{ Form::label('tipoDocumento', 'Tipo Documento') }}
@@ -117,7 +117,7 @@
                              </div>  
                               <div class="form-group">
                                 {{ Form::label('country', 'Pais') }}
-                                {{ Form::text('country', null, ['class' => 'form-control', 'id' => 'country']) }}
+                                {{ Form::select('country', ['CO' => 'Colombia'], 'CO',['class' => 'form-control', 'id' => 'country']) }}
                              </div>  
                               <div class="form-group">
                                 {{ Form::label('phone', 'Telefono') }}
