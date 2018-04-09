@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 use SoapClient;
 use Illuminate\Http\Request;
-
+use App\Person;
 class SoapController 
 {
 
@@ -13,7 +13,7 @@ class SoapController
 * Funcion para obtener array de auth para  el cliente soap
  * author: Diego Duran
  * version: 1
- * since : 7/03/2018
+ * since : 5/04/2018
  * param : none
  * return : array auth
  *version : 1
@@ -28,9 +28,8 @@ class SoapController
                               'tranKey'    => $hashkey,
                               'seed'       => $seed
                             );
-       $auth   = array('auth' => $paramAuth);
-
-       return  $auth; 
+      
+       return  $paramAuth; 
   }
 
 
@@ -39,7 +38,7 @@ class SoapController
 * Funcion para conectar e  instanciar y obtener el cliente soap
  * author: Diego Duran
  * version: 1
- * since : 7/04/2018
+ * since : 6/04/2018
  * param : none
  * return : CLiente soap
  *version : 1
@@ -60,14 +59,15 @@ class SoapController
 * Funcion para obtener la lista de los bancos
  * author: Diego Duran
  * version: 1
- * since : 7/02/2018
+ * since : 7/04/2018
  * param : none
  * return : Lista de banco a la vista
  *version : 1
  */
 public function obtenerListaBancos(){
       $client = $this->obtenerClienteSOAP();
-      $auth = $this->obtenerArrayAutenticacion();
+      $atentificacion = $this->obtenerArrayAutenticacion();
+      $auth   = array('auth' => $atentificacion);
           try{
               $result = $client->getBankList($auth);
               // dd($result);
@@ -85,7 +85,7 @@ public function obtenerListaBancos(){
 * Funcion para enviar  y crear la transaccion
  * author: Diego Duran
  * version: 1
- * since : 7/02/2018
+ * since : 8/04/2018
  * param : none
  * return : Lista de banco a la vista
  *version : 1
@@ -108,22 +108,25 @@ public function obtenerListaBancos(){
    $devolutionBase = $request->get('devolucionBase');
    $tipAmount = $request->get('propina');
 
-   $person = array(
-                     'document' => $request->get('documentoPersona'),
-                     'documentType' =>$request->get('tipoDocumento'),
-                     'firstName' =>$request->get('firstName'),
-                     'lastName' =>$request->get('lastName'),
-                     'company' =>$request->get('company'),
-                     'emailAddress' =>$request->get('emailAddress'),
-                     'address' =>$request->get('address'),
-                     'city' =>$request->get('city'),
-                     'province' =>$request->get('province'),
-                     'country' =>$request->get('country'),
-                     'phone' =>$request->get('phone'),
-                     'mobile' =>$request->get('mobile'),
-                            );
-       
 
+      
+                           
+     ////instanciar clase persona con el constructor  
+   $person = new Person($request->get('documentoPersona'),
+                         $request->get('tipoDocumento'),
+                         $request->get('firstName'),
+                         $request->get('lastName'),
+                         $request->get('company'),
+                         $request->get('emailAddress'),
+                         $request->get('address'),
+                         $request->get('city'),
+                         $request->get('province'),
+                         $request->get('country'),
+                         $request->get('phone'),
+                         $request->get('mobile')
+              );
+
+  
    $ipAddress =  $request->ip();
    $userAgent = $request->header('User-Agent');
 
@@ -151,8 +154,7 @@ public function obtenerListaBancos(){
 
 
      $auth = $this->obtenerArrayAutenticacion();
-     $auntetificacion = $auth['auth'];
-     $params = array( 'auth' => $auntetificacion   ,'transaction' =>   $PSETransactionRequest);
+     $params = array( 'auth' => $auth   ,'transaction' =>   $PSETransactionRequest);
    //  dd($params);
      $client = $this->obtenerClienteSOAP();
      
@@ -164,14 +166,20 @@ public function obtenerListaBancos(){
               echo '<br>'.$fault;
           }
 
-  dd($result);
+   ///  dd($result);
    
+    $result = json_encode($result,true);
+    $result = json_decode( $result, true );
+
+
+    $transactionID = $result['createTransactionResult']['transactionID'];
+    echo $transactionID;
+  
+
 
 
 
   }
-
-
 
 
 

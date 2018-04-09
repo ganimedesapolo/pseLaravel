@@ -57,7 +57,9 @@
                                          <option value="{{ $item->bankCode }}"> {{  $item->bankName }}</option>
                                    @endforeach 
                                    </select>
-                              </div>       
+                              </div>     
+                           <hr><h3>Por favor digite los siguientes datos necesarios para la simulacion</h3><hr>
+
                              <div class="form-group">
                                  {{ Form::label('descripcionPago','Descripcion Pago') }}
                                  {{ Form::textarea('descripcionPago', null, ['class' => 'form-control','rows'=>'2']) }}
