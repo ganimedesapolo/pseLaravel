@@ -77,6 +77,7 @@ public function obtenerListaBancos(){
               echo '<br>'.$fault;
           }
           return view('formulario',compact('result'));
+
     }
 
 
@@ -233,10 +234,8 @@ public function obtenerTransaccion($transactionID){
               echo '<br>'.$fault;
           }
 
- dd($result);
+ return view('verDetalles',compact('result'));
 
-
-// return $transactionID;
 }
 
 
