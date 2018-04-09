@@ -1,58 +1,15 @@
 <?php
 namespace App\Http\Controllers;
-use SoapClient;
+
 use Illuminate\Http\Request;
 use App\Person;
+use App\Conexion;
 use App\Transaction;
+
 class SoapController 
 {
 
-
-
-
-/**
-* Funcion para obtener array de auth para  el cliente soap
- * author: Diego Duran
- * version: 1
- * since : 5/04/2018
- * param : none
- * return : array auth
- *version : 1
- */
-  public function obtenerArrayAutenticacion(){
-      $login = '6dd490faf9cb87a9862245da41170ff2';
-      $seed  = date( 'c' );
-      $tranKey = '024h1IlD';
-      $hashkey = sha1($seed.$tranKey,false);
-      $paramAuth = array(
-                              'login'      => $login,
-                              'tranKey'    => $hashkey,
-                              'seed'       => $seed
-                            );
-      
-       return  $paramAuth; 
-  }
-
-
-
-/**
-* Funcion para conectar e  instanciar y obtener el cliente soap
- * author: Diego Duran
- * version: 1
- * since : 6/04/2018
- * param : none
- * return : CLiente soap
- *version : 1
- */
-
-  public function obtenerClienteSOAP(){
-     
-      $url = "https://test.placetopay.com/soap/pse/?wsdl";
-      $client = new SoapClient($url,['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
-      $client->__setLocation('https://test.placetopay.com/soap/pse');
-      return $client;
-
-  }
+   
 
 
 
@@ -66,8 +23,9 @@ class SoapController
  *version : 1
  */
 public function obtenerListaBancos(){
-      $client = $this->obtenerClienteSOAP();
-      $atentificacion = $this->obtenerArrayAutenticacion();
+    
+      $client = Conexion::obtenerClienteSOAP();
+      $atentificacion = Conexion::obtenerArrayAutenticacion();
       $auth   = array('auth' => $atentificacion);
           try{
               $result = $client->getBankList($auth);
@@ -95,7 +53,8 @@ public function obtenerListaBancos(){
 
  public function crearTransaccion(Request $request ){
    
-   
+   ///algunos datos en codigo duro ("quemado"), pero se puede implementar mediante el llamado al constructor de una 
+  //clase, como por ejemplo la clase Person, pero debido a la naturaleza del problema se realizo asi para algunos campos
 
 
    $bankCode=$request->get('idBanco');
@@ -156,10 +115,10 @@ public function obtenerListaBancos(){
   );
 
 
-     $auth = $this->obtenerArrayAutenticacion();
+     $auth = Conexion::obtenerArrayAutenticacion();
      $params = array( 'auth' => $auth   ,'transaction' =>   $PSETransactionRequest);
    //  dd($params);
-     $client = $this->obtenerClienteSOAP();
+     $client = Conexion::obtenerClienteSOAP();
      
  
       try{
@@ -222,10 +181,10 @@ public function obtenerListaBancos(){
 
 public function obtenerTransaccion($transactionID){
    ///obtener informacion desde el servicio
-     $auth = $this->obtenerArrayAutenticacion();
+     $auth = Conexion::obtenerArrayAutenticacion();
      $params = array( 'auth' => $auth   ,'transactionID' => $transactionID);
    //  dd($params);
-     $client = $this->obtenerClienteSOAP();
+     $client = Conexion::obtenerClienteSOAP();
     
       try{
               $result = $client->getTransactionInformation($params);

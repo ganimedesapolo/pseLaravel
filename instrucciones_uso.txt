@@ -1,6 +1,31 @@
-Tener instala composer en el pc
-1)Ejecutar composer install
-2)Ejecutar composer update
-3)Ejecutar php artisan key:generate 
-5)php artisan migrate 
-4) Habilitar soap client en el archi *php.ini
+Esta aplicacion fue construida y corrio correctamente en el siguiente entorno : 
+PHP 7.1.9
+MariaDB  10.1.31
+XAMPP  7.1.9
+Windows 10 
+Laravel 5.5.40
+Google Chrome Versión 65.0.3325.181
+
+
+Para instalar correctamente el proyecto seguir los siguientes pasos :
+Descomprimir el *ZIP en el servidor local.
+
+
+1)Abrir la consola de comandos en la raiz del proyecto y ejecutar  "composer install" (Debe tener instalado composer)
+2)Abrir la consola de comandos en la raiz del proyecto y ejecutar  "composer update" (Debe tener instalado composer)
+3)Si hay error con la llave ejecutar  en consola "php artisan key:generate" (En ocasiones cuando se migran proyectos laravel pide la llave de nuevo)
+4)Modificar el archivo .env en los campos DB_DATABASE=
+                                          DB_USERNAME=
+                                          DB_PASSWORD= .
+
+5)Ejecutar en consola en la raiz del proyecto "php artisan migrate"  (para crear la tabla que almacena los id de las transacciones para su consulta al servicio).
+6) Habilitar "Soap Client" en el archivo *php.ini para poder usar el modulo.
+7) Adjunto un pequeño video de la applicacion sirviendo. 
+
+
+
+Cualquier inconveniente
+Celular 320 818 75 28
+Email diegoerleyduran@yahoo.com
+Gracias por su tiempo. 
+Sinceramente Ing Diego Erley Duran.
