@@ -29,7 +29,8 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                          
+                           <li><a href="{{ route('inicio') }}">Crear Transaccion</a></li>
+                           <li><a href="{{ route('listarTransacciones') }}">Lista Transacciones</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

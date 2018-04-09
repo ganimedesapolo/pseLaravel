@@ -15,19 +15,19 @@
                             <tr>
                                 <th width="10px">Numero</th>
                                 <th>ID Transaccion</th>
-                                <th colspan="3">&nbsp;</th>
+                                <th colspan="2">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transactions as $transaction)
                             <tr>
                                 <td>{{ $transaction->id }}</td>
-                                <td>{{ $transaction->transactionID }}</td>
+                                <td><b>{{ $transaction->transactionID }}</b></td>
                                 <td width="10px">
-                                    <a href="" class="btn btn-sm btn-default">Ver</a>
+                                 <a href="{{ route('verTransaccion', $transaction->transactionID) }}" class="btn btn-sm btn-default">Ver Detalles</a>
                                 </td>
                                 <td width="10px">
-                                    <a href="" class="btn btn-sm btn-default">Editar</a>
+                                   
                                 </td>
                                 <td width="10px"></td>
                             </tr>

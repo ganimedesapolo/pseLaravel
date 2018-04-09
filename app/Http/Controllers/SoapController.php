@@ -191,6 +191,16 @@ public function obtenerListaBancos(){
   }
 
 
+
+/**
+* Funcion para listar transacciones
+ * author: Diego Duran
+ * version: 1
+ * since : 9/04/2018
+ * param : none
+ * return : Lista de transacciones a la vista
+ *version : 1
+ */
   public function listarTransacciones(){
     /////retornar vista con lista de transacciones empaquetadas
    $transactions = Transaction::orderBy('id', 'DESC')->paginate();
@@ -199,6 +209,35 @@ public function obtenerListaBancos(){
 
 
 
+/**
+* Funcion para obtener informacion de las transacciones
+ * author: Ing. Diego Duran
+ * version: 1
+ * since : 9/04/2018
+ * param : $
+ * return : Informacion de la  transaccion en particular a la vista
+ *version : 1
+ */
+
+public function obtenerTransaccion($transactionID){
+   ///obtener informacion desde el servicio
+     $auth = $this->obtenerArrayAutenticacion();
+     $params = array( 'auth' => $auth   ,'transactionID' => $transactionID);
+   //  dd($params);
+     $client = $this->obtenerClienteSOAP();
+    
+      try{
+              $result = $client->getTransactionInformation($params);
+         }
+          catch(SoapFault $fault) {
+              echo '<br>'.$fault;
+          }
+
+ dd($result);
+
+
+// return $transactionID;
+}
 
 
 
