@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use SoapClient;
 use Illuminate\Http\Request;
 use App\Person;
+use App\Transaction;
 class SoapController 
 {
 
@@ -75,7 +76,7 @@ public function obtenerListaBancos(){
           catch(SoapFault $fault) {
               echo '<br>'.$fault;
           }
-          return view('inicio',compact('result'));
+          return view('formulario',compact('result'));
     }
 
 
@@ -92,6 +93,7 @@ public function obtenerListaBancos(){
  */
 
  public function crearTransaccion(Request $request ){
+   
    
 
 
@@ -172,14 +174,28 @@ public function obtenerListaBancos(){
     $result = json_decode( $result, true );
 
 
-    $transactionID = $result['createTransactionResult']['transactionID'];
-    echo $transactionID;
-  
+
+  /////guardar el id de las transaccion en la base de datos 
+   $transactionID = $result['createTransactionResult']['transactionID']; 
+
+   $transactionInformation =array(
+                                   'transactionID'=>$transactionID
+                                );
+   
+   Transaction::create($transactionInformation);
 
 
-
+   return redirect()->route('listarTransacciones');
+   
 
   }
+
+
+  public function listarTransacciones(){
+    /////retornar vista con lista de transacciones empaquetadas
+   $transactions = Transaction::orderBy('id', 'DESC')->paginate();
+   return view('lista', compact('transactions'));
+   }
 
 
 
